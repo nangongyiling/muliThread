@@ -1,6 +1,6 @@
 package com.zp.bq;
 
-public class BqTest {
+public class BqWNTest {
 
     public static void main(String[] args) {
         BlockQueueWN bq = new BlockQueueWN(10);
