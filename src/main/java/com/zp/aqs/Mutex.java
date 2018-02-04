@@ -50,8 +50,7 @@ public class Mutex implements Lock{
 
 	@Override
 	public void lockInterruptibly() throws InterruptedException {
-		// TODO Auto-generated method stub
-		
+		sync.acquireInterruptibly(1);
 	}
 
 	@Override
@@ -62,8 +61,7 @@ public class Mutex implements Lock{
 	@Override
 	public boolean tryLock(long time, TimeUnit unit)
 			throws InterruptedException {
-		// TODO Auto-generated method stub
-		return false;
+		return sync.tryAcquireNanos(1, unit.toNanos(time));
 	}
 
 	@Override
