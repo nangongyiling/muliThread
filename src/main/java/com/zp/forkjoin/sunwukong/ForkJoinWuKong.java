@@ -1,8 +1,13 @@
 package com.zp.forkjoin.sunwukong;
 
+import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveTask;
 
+import com.zp.forkjoin.MakePanTaoArray;
 import com.zp.forkjoin.service.IPickTaoZi;
+import com.zp.forkjoin.service.IProcessTaoZi;
+import com.zp.forkjoin.sunwukong.impl.WuKongPickImpl;
+import com.zp.forkjoin.sunwukong.impl.WuKongProcessImpl;
 import com.zp.forkjoin.vo.PanTao;
 
 public class ForkJoinWuKong {
@@ -49,5 +54,17 @@ public class ForkJoinWuKong {
 			}
 		}
 		
+	}
+	
+	public static void main(String[] args) {
+		ForkJoinPool pool = new ForkJoinPool();
+		PanTao[] src = MakePanTaoArray.makeArray();
+		IProcessTaoZi processTaoZi = new WuKongProcessImpl();
+		IPickTaoZi pickTaoZi = new WuKongPickImpl(processTaoZi);
+		
+		long start = System.currentTimeMillis();
+		XiaoWuKong xiaowukong = new XiaoWuKong(src,0,src.length-1,pickTaoZi);
+		pool.invoke(xiaowukong);
+		System.out.println("The count is "+xiaowukong.join()+" spend time :"+(System.currentTimeMillis()-start)+"ms");
 	}
 }
